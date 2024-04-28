@@ -5,14 +5,15 @@ from pathlib import Path
 
 import betterlogging as bl
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from infrastructure.database.setup import create_engine, create_session_pool
-from l10n.translator import TranslatorHub
-from tgbot.config import load_config, Config
+from data.infrastructure.database.setup import create_engine, create_session_pool
+from data.l10n.translator import TranslatorHub
+
+from tgbot.config import load_config
 from tgbot.handlers import routers_list
 from tgbot.middlewares.database import OuterDatabaseMiddleware, InnerDatabaseMiddleware, UserExistingMiddleware
 from tgbot.middlewares.l10n import L10nMiddleware
@@ -22,20 +23,6 @@ from tgbot.services import broadcaster
 
 
 def setup_logging():
-    """
-    Set up logging configuration for the application.
-
-    This method initializes the logging configuration for the application.
-    It sets the log level to INFO and configures a basic colorized log for
-    output. The log format includes the filename, line number, log level,
-    timestamp, logger name, and log message.
-
-    Returns:
-        None
-
-    Example usage:
-        setup_logging()
-    """
     log_level = logging.INFO
     bl.basic_colorized_config(level=log_level)
 
@@ -48,16 +35,6 @@ def setup_logging():
 
 
 def get_storage(config):
-    """
-    Return storage based on the provided configuration.
-
-    Args:
-        config (Config): The configuration object.
-
-    Returns:
-        Storage: The storage object based on the configuration.
-
-    """
     if config.tg_bot.use_redis:
         return RedisStorage.from_url(
             config.redis.dsn(),
@@ -75,7 +52,7 @@ def setup_translator(
     fluent_files = [file for file in all_files if file.endswith(".ftl")]
 
     translator_hub = TranslatorHub(
-        locales_dir_path=str(locales_dir_path), locales=["ru", "uz", "en"],
+        locales_dir_path=str(locales_dir_path), locales=["ru", "uz"],
         resource_ids=fluent_files
     )
     return translator_hub
@@ -119,10 +96,10 @@ async def main():
 
     config = load_config(".env")
     storage = get_storage(config)
-    bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
+    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML"))
 
     # Localization initialization:
-    locales_dir_path = Path(__file__).parent.joinpath("l10n/locales")
+    locales_dir_path = Path(__file__).parent.joinpath("data/l10n/locales")
     translator_hub = setup_translator(locales_dir_path=str(locales_dir_path))
 
     # Routers and dialogs initialization:

@@ -200,7 +200,7 @@ def load_config(path: str = None) -> Config:
 
     return Config(
         tg_bot=TgBot.from_env(env),
-        # db=DbConfig.from_env(env),
+        db=DbConfig.from_env(env),
         # redis=RedisConfig.from_env(env),
         # api=ApiConfig.from_env(env),
         misc=Miscellaneous(),

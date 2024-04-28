@@ -3,7 +3,7 @@ from typing import List
 from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
 
-from l10n.translator import LocalizedTranslator
+from data.l10n.translator import LocalizedTranslator
 
 
 async def update_user_commands(bot: Bot, l10n: LocalizedTranslator):

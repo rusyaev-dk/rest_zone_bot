@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from infrastructure.database.repo.user import UserDBRepo
+from domain.repositories.db_repo.reservation import TapchanReservationDBRepo
+from domain.repositories.db_repo.tapchan import TapchanDBRepo
+from domain.repositories.db_repo.user import UserDBRepo
 
 
 @dataclass
@@ -21,3 +23,11 @@ class RequestsRepo:
         The User repository sessions are required to manage user operations.
         """
         return UserDBRepo(self.session)
+
+    @property
+    def tapchans(self) -> TapchanDBRepo:
+        return TapchanDBRepo(self.session)
+
+    @property
+    def reservations(self) -> TapchanReservationDBRepo:
+        return TapchanReservationDBRepo(self.session)

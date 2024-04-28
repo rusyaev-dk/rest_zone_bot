@@ -3,8 +3,7 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 
-
-from l10n.translator import TranslatorHub
+from data.l10n.translator import TranslatorHub
 
 
 class L10nMiddleware(BaseMiddleware):

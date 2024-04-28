@@ -4,8 +4,8 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from infrastructure.database.models import User
-from infrastructure.database.repo.requests import RequestsRepo
+from data.infrastructure.database.models import UserDBModel
+from domain.repositories.db_repo.requests import RequestsRepo
 from tgbot.keyboards.inline import set_user_language_kb
 from tgbot.misc.constants import SET_USER_LANGUAGE_TEXT
 
@@ -59,9 +59,11 @@ class UserExistingMiddleware(BaseMiddleware):
         repo: RequestsRepo = data["repo"]
         user = await repo.users.get_user(telegram_id=event.from_user.id)
         if not user:
+            if data["raw_state"] == "UserRegistrationSG:get_phone":
+                return await handler(event, data)
             await event.answer(SET_USER_LANGUAGE_TEXT, reply_markup=set_user_language_kb())
             return
         if not user.is_active:
-            await repo.users.update_user(User.telegram_id == event_from_user.id, is_active=True)
+            await repo.users.update_user(UserDBModel.telegram_id == event_from_user.id, is_active=True)
         data["user"] = user
         return await handler(event, data)
