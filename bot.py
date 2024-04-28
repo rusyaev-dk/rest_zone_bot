@@ -8,6 +8,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
+from aiogram_dialog import setup_dialogs
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from data.infrastructure.database.setup import create_engine, create_session_pool
@@ -105,7 +106,7 @@ async def main():
     # Routers and dialogs initialization:
     dp = Dispatcher(storage=storage)
     dp.include_routers(*routers_list)
-    # setup_dialogs(dp)
+    setup_dialogs(dp)
     dp.workflow_data.update(config=config, translator_hub=translator_hub)
 
     # Database initialization:

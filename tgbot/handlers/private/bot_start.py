@@ -6,7 +6,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
 from data.infrastructure.database.models import UserDBModel
-from data.l10n.translator import TranslatorHub
+from data.l10n.translator import TranslatorHub, LocalizedTranslator
 from domain.repositories.db_repo.requests import RequestsRepo
 
 from tgbot.keyboards.inline import SetUserLanguageFactory
@@ -18,8 +18,20 @@ start_router = Router()
 
 
 @start_router.message(CommandStart())
-async def bot_start(message: Message):
-    await message.reply("Hello!")
+async def bot_start(
+        message: Message,
+        l10n: LocalizedTranslator,
+        state: FSMContext,
+):
+    await state.clear()
+    args = {
+        "name": html.escape(message.from_user.full_name),
+    }
+    text = l10n.get_text(key="hello-msg", args=args)
+    await message.answer(
+        text=text,
+        reply_markup=main_menu_kb(l10n=l10n),
+    )
 
 
 @start_router.callback_query(SetUserLanguageFactory.filter())
@@ -50,7 +62,7 @@ async def set_user_language(
     args = {
         "name": html.escape(call.from_user.full_name),
     }
-    text = l10n.get_text(key="hello-msg", args=args)
+    text = l10n.get_text(key="hello-registration-msg", args=args)
     await call.message.answer(
         text=text,
         reply_markup=phone_request_kb(l10n=l10n),
