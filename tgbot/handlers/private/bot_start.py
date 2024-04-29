@@ -5,7 +5,6 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
-from data.infrastructure.database.models import UserDBModel
 from data.l10n.translator import TranslatorHub, LocalizedTranslator
 from domain.repositories.db_repo.requests import RequestsRepo
 
@@ -37,7 +36,6 @@ async def bot_start(
 @start_router.callback_query(SetUserLanguageFactory.filter())
 async def set_user_language(
         call: CallbackQuery,
-        repo: RequestsRepo,
         callback_data: SetUserLanguageFactory,
         translator_hub: TranslatorHub,
         state: FSMContext,
@@ -45,20 +43,10 @@ async def set_user_language(
     language_code = callback_data.language_code
     l10n = translator_hub.l10ns.get(language_code)
 
-    user = await repo.users.get_user(telegram_id=call.from_user.id)
-
     await call.answer()
     await call.message.delete()
     await update_user_commands(bot=call.bot, l10n=l10n)
 
-    if user:
-        await repo.users.update_user(UserDBModel.telegram_id == call.from_user.id, language=language_code)
-        text = l10n.get_text(key="main-menu-msg")
-        await call.message.answer_sticker(
-            text,
-            reply_markup=main_menu_kb(l10n=l10n)
-        )
-        return
     args = {
         "name": html.escape(call.from_user.full_name),
     }

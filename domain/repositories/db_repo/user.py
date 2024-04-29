@@ -87,11 +87,20 @@ class UserDBRepo(BaseRepo):
         result = await self.session.scalar(stmt)
         return result
 
-    async def update_user(
+    async def update_user_phone(
             self,
-            *clauses,
-            **values,
+            telegram_id: int,
+            phone: str,
     ):
-        stmt = update(UserDBModel).where(*clauses).values(**values)
+        stmt = update(UserDBModel).where(UserDBModel.telegram_id == telegram_id).values(phone=phone)
+        await self.session.execute(stmt)
+        await self.session.commit()
+
+    async def update_user_language(
+            self,
+            telegram_id: int,
+            language_code: str,
+    ):
+        stmt = update(UserDBModel).where(UserDBModel.telegram_id == telegram_id).values(language=language_code)
         await self.session.execute(stmt)
         await self.session.commit()

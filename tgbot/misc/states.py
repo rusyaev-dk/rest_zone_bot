@@ -13,4 +13,4 @@ class UserRegistrationSG(StatesGroup):
 class SettingsSG(StatesGroup):
     overall_settings = State()
     change_language = State()
-    change_notification_time = State()
+    change_phone = State()

@@ -27,6 +27,7 @@ def phone_request_kb(l10n: LocalizedTranslator):
     builder.add(*buttons)
     return builder.as_markup(resize_keyboard=True)
 
+
 def feedback_kb(l10n: LocalizedTranslator):
     builder = ReplyKeyboardBuilder()
     builder.button(text=l10n.get_text(key="cancel-btn"))

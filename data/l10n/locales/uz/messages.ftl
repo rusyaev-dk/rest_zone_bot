@@ -5,7 +5,7 @@ hello-registration-msg =
     Quyidagi tugmani bosish orqali telefon raqamingizni yuboring:
 
 hello-msg =
-    Здравствуйте, { $name }!
+    Salom, { $name }!
 
     Baliq ovlash botiga xush kelibsiz.
 
@@ -17,9 +17,17 @@ registration-complete-msg =
 
     Baliq ovlash botiga xush kelibsiz.
 
-main-menu-msg = Главное меню
+overall-settings-msg =
+    Telefoningiz: <b>{ $phone }</b>
 
-action-cancelled = Amal bekor qilindi.
+    ⚙ Variantni tanlang:
+
+phone-setting-msg = 📞 Telefon raqamingizni o'zgartirish
+send-phone-msg = ❗️ Iltimos, telefon raqamingizni <b>+998 XX XXX XX XX</b> formatida yuboring yoki quyidagi tugmani bosing:
+
+main-menu-msg = Asosiy menyu:
+action-cancelled-msg = Amal bekor qilindi.
+settings-applied-msg = ✅ Sozlamalar qoʻllanildi
 
 send-feedback = ✉️ Ma'muriyatga xabar yozing:
 feedback-sent = 📮 Xabaringiz jo'natildi.
