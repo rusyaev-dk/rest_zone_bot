@@ -51,6 +51,8 @@ class TapchanDBRepo(BaseRepo):
         reservation_db = await self.session.scalar(stmt)
         reservation = TapchanReservationModel(
             tapchan_id=reservation_db.tapchan_id,
+            user_id=reservation_db.user_id,
+            user_phone=reservation_db.user_phone,
             check_in=reservation_db.check_in,
             check_out=reservation_db.check_out,
         )

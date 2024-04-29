@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import select, func, update, and_
+from sqlalchemy import select, func, update
 from sqlalchemy.dialects.postgresql import insert
 
 from data.infrastructure.database.models import UserDBModel
@@ -72,17 +72,9 @@ class UserDBRepo(BaseRepo):
         result = await self.session.scalar(stmt)
         return result
 
-    async def get_active_users_count(self) -> int:
-        stmt = select(func.count(UserDBModel.telegram_id)).where(UserDBModel.is_active == True)
-        result = await self.session.scalar(stmt)
-        return result
-
     async def get_users_count_by_language(self, language_code: str) -> int:
         stmt = select(func.count(UserDBModel.telegram_id)).where(
-            and_(
                 UserDBModel.language == language_code,
-                UserDBModel.is_active == True
-            )
         )
         result = await self.session.scalar(stmt)
         return result

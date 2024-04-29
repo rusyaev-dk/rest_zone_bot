@@ -7,16 +7,22 @@ class TapchanReservationModel:
     check_in: datetime
     check_out: datetime
     tapchan_id: int
+    user_phone: str
+    user_id: int
 
     def __init__(
             self,
             tapchan_id: int,
+            user_id: int,
+            user_phone: str,
             check_in: datetime,
             check_out: datetime,
     ):
         if check_in == check_out or check_out < check_in:
             raise IncorrectReservationData
         self.tapchan_id = tapchan_id
+        self.user_id = user_id
+        self.user_phone = user_phone
         self.check_in = check_in
         self.check_out = check_out
 

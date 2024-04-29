@@ -13,10 +13,6 @@ async def update_user_commands(bot: Bot, l10n: LocalizedTranslator):
             description=l10n.get_text(key="cmd-start-description")
         ),
         BotCommand(
-            command="terms_of_use",
-            description=l10n.get_text(key="cmd-tou-description")
-        ),
-        BotCommand(
             command="help",
             description=l10n.get_text(key="cmd-help-description")
         ),
@@ -35,12 +31,12 @@ async def setup_admin_commands(
             description="Перезапустить бота"
         ),
         BotCommand(
-            command="terms_of_use",
-            description="Пользовательское соглашение"
-        ),
-        BotCommand(
             command="statistics",
             description="Статистика"
+        ),
+        BotCommand(
+            command="help",
+            description="Помощь"
         ),
     ]
 

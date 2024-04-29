@@ -13,6 +13,8 @@ class TapchanReservationDBRepo(BaseRepo):
     async def add_reservation(
             self,
             tapchan_id: int,
+            user_id: int,
+            user_phone: str,
             check_in: datetime,
             check_out: datetime
     ):
@@ -21,6 +23,8 @@ class TapchanReservationDBRepo(BaseRepo):
             .values(
                 reservation_id=generate_int_id(),
                 tapchan_id=tapchan_id,
+                user_id=user_id,
+                user_phone=user_phone,
                 check_in=check_in,
                 check_out=check_out,
             )
@@ -37,6 +41,8 @@ class TapchanReservationDBRepo(BaseRepo):
         result = await self.session.scalar(stmt)
         reservation = TapchanReservationModel(
             tapchan_id=result.tapchan_id,
+            user_id=result.user_id,
+            user_phone=result.user_phone,
             check_in=result.check_in,
             check_out=result.check_out,
         )

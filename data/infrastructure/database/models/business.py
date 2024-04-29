@@ -25,5 +25,7 @@ class TapchanReservationDBModel(Base):
 
     reservation_id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=False)
     tapchan_id: Mapped[int] = mapped_column(BIGINT, primary_key=False, autoincrement=False)
+    user_id: Mapped[int] = mapped_column(BIGINT, primary_key=False, autoincrement=False)
+    user_phone: Mapped[str] = mapped_column(String(25), nullable=False)
     check_in: Mapped[datetime] = mapped_column(TIMESTAMP, nullable=False, autoincrement=False)
     check_out: Mapped[datetime] = mapped_column(TIMESTAMP, nullable=False, autoincrement=False)
