@@ -6,21 +6,24 @@ from aiogram_dialog import DialogManager, StartMode
 from data.l10n.translator import LocalizedTranslator
 from domain.repositories.db_repo.requests import RequestsRepo
 from tgbot.keyboards.reply import feedback_kb
-from tgbot.misc.states import FeedbackSG, SettingsSG
+from tgbot.misc.states import FeedbackSG, SettingsSG, RentTopchanSG
 
 menu_router = Router()
 
 
-@menu_router.message(F.text.in_(["Арендовать тапчан"]))
+@menu_router.message(F.text.in_(["Арендовать топчан", "Арендовать топчан"]))
 @flags.rate_limit(key="default")
-async def rent_tapchan(
+async def rent_topchan(
         message: Message,
         state: FSMContext,
         repo: RequestsRepo,
         l10n: LocalizedTranslator,
         dialog_manager: DialogManager
 ):
-    await dialog_manager.reset_stack()
+    await dialog_manager.start(
+        state=RentTopchanSG.overall_topchans,
+        mode=StartMode.RESET_STACK,
+    )
 
 
 @menu_router.message(F.text.in_(["📩 Обратная связь", "📩 Fikr-mulohaza"]))

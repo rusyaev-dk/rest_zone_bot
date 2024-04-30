@@ -68,7 +68,6 @@ change_user_phone_window = Window(
         id='cancel_phone_setting',
         state=SettingsSG.overall_settings
     ),
-
     getter=change_phone_getter,
     state=SettingsSG.change_phone
 )

@@ -64,6 +64,6 @@ class UserExistingMiddleware(BaseMiddleware):
             await event.answer(SET_USER_LANGUAGE_TEXT, reply_markup=set_user_language_kb())
             return
         if not user.is_active:
-            await repo.users.update_user(UserDBModel.telegram_id == event_from_user.id, is_active=True)
+            await repo.users.update_user_active_status(telegram_id=event_from_user.id, is_active=True)
         data["user"] = user
         return await handler(event, data)

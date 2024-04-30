@@ -8,7 +8,7 @@ def main_menu_kb(l10n: LocalizedTranslator):
     builder = ReplyKeyboardBuilder()
 
     buttons = [
-        KeyboardButton(text=l10n.get_text(key="reserve-tapchan-btn")),
+        KeyboardButton(text=l10n.get_text(key="reserve-topchan-btn")),
         KeyboardButton(text=l10n.get_text(key="feedback-btn")),
         KeyboardButton(text=l10n.get_text(key="settings-btn")),
     ]

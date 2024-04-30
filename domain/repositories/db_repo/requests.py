@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from domain.repositories.db_repo.reservation import TapchanReservationDBRepo
-from domain.repositories.db_repo.tapchan import TapchanDBRepo
+from domain.repositories.db_repo.reservation import TopchanReservationDBRepo
+from domain.repositories.db_repo.topchan import TopchanDBRepo
 from domain.repositories.db_repo.user import UserDBRepo
 
 
@@ -25,9 +25,9 @@ class RequestsRepo:
         return UserDBRepo(self.session)
 
     @property
-    def tapchans(self) -> TapchanDBRepo:
-        return TapchanDBRepo(self.session)
+    def topchans(self) -> TopchanDBRepo:
+        return TopchanDBRepo(self.session)
 
     @property
-    def reservations(self) -> TapchanReservationDBRepo:
-        return TapchanReservationDBRepo(self.session)
+    def reservations(self) -> TopchanReservationDBRepo:
+        return TopchanReservationDBRepo(self.session)

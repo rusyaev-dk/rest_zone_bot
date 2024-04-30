@@ -1,7 +1,7 @@
 
 phone-request-btn = 📞 Отправить номер
 
-reserve-tapchan-btn = Арендовать тапчан
+reserve-topchan-btn = Арендовать топчан
 
 settings-btn = 🔧 Настройки
 
@@ -15,3 +15,5 @@ cancel-btn = ❌ Отмена
 close-btn = Закрыть
 
 back-btn = Назад
+
+topchan-btn = Топчан №{ $index }

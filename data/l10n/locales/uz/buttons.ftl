@@ -1,7 +1,7 @@
 
 phone-request-btn = 📞 Raqam yuboring
 
-reserve-tapchan-btn = Арендовать тапчан
+reserve-topchan-btn = Арендовать тапчан
 
 settings-btn = 🔧 Sozlamalar
 
@@ -15,3 +15,5 @@ cancel-btn = ❌ Bekor qilish
 close-btn = Yopish
 
 back-btn = Orqaga
+
+topchan-btn = Topchan №{ $index }

@@ -1,28 +1,29 @@
 import datetime
+from typing import List
 
-from sqlalchemy import select, func, update, and_
+from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
-from data.infrastructure.database.models import TapchanReservationDBModel
-from domain.models.business_models import TapchanReservationModel
+from data.infrastructure.database.models import TopchanReservationDBModel
+from domain.models.business_models import TopchanReservationModel
 from domain.repositories.db_repo.base import BaseRepo
 from tgbot.services.micro_functions import generate_int_id
 
 
-class TapchanReservationDBRepo(BaseRepo):
+class TopchanReservationDBRepo(BaseRepo):
     async def add_reservation(
             self,
-            tapchan_id: int,
+            topchan_id: int,
             user_id: int,
             user_phone: str,
             check_in: datetime,
             check_out: datetime
     ):
         stmt = (
-            insert(TapchanReservationDBModel)
+            insert(TopchanReservationDBModel)
             .values(
                 reservation_id=generate_int_id(),
-                tapchan_id=tapchan_id,
+                topchan_id=topchan_id,
                 user_id=user_id,
                 user_phone=user_phone,
                 check_in=check_in,
@@ -36,11 +37,11 @@ class TapchanReservationDBRepo(BaseRepo):
     async def get_reservation(
             self,
             reservation_id: int,
-    ) -> TapchanReservationModel:
-        stmt = select(TapchanReservationDBModel).where(TapchanReservationDBModel.reservation_id == reservation_id)
+    ) -> TopchanReservationModel:
+        stmt = select(TopchanReservationDBModel).where(TopchanReservationDBModel.reservation_id == reservation_id)
         result = await self.session.scalar(stmt)
-        reservation = TapchanReservationModel(
-            tapchan_id=result.tapchan_id,
+        reservation = TopchanReservationModel(
+            topchan_id=result.topchan_id,
             user_id=result.user_id,
             user_phone=result.user_phone,
             check_in=result.check_in,
@@ -48,11 +49,22 @@ class TapchanReservationDBRepo(BaseRepo):
         )
         return reservation
 
-    async def update_reservation(
+    async def get_relevance_topchan_reservations(
             self,
-            *clauses,
-            **values,
-    ):
-        stmt = update(TapchanReservationDBModel).where(*clauses).values(**values)
-        await self.session.execute(stmt)
-        await self.session.commit()
+            topchan_id: int,
+    ) -> List[TopchanReservationModel]:
+        stmt = select(TopchanReservationDBModel).where(TopchanReservationDBModel.topchan_id == topchan_id)
+        reservations_db_models = await self.session.scalars(stmt)
+
+        res_reservations = []
+        for reservation_db in reservations_db_models:
+            res_reservations.append(
+                TopchanReservationModel(
+                    topchan_id=reservation_db.topchan_id,
+                    user_id=reservation_db.user_id,
+                    user_phone=reservation_db.user_phone,
+                    check_in=reservation_db.check_in,
+                    check_out=reservation_db.check_out,
+                )
+            )
+        return res_reservations

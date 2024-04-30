@@ -16,6 +16,7 @@ class UserDBModel(Base, TimestampMixin):
     full_name: Mapped[str] = mapped_column(String(128))
     language: Mapped[str] = mapped_column(String(10), server_default=text("'ru'"))
     phone: Mapped[str] = mapped_column(String(25), nullable=False)
+    is_active: Mapped[bool] = mapped_column(BOOLEAN, default=True, autoincrement=False)
 
     def __repr__(self):
         return f"<User {self.telegram_id} {self.username} {self.full_name}>"
