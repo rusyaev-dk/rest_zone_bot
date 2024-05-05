@@ -3,10 +3,11 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.kbd import Select, Button
 
 from data.l10n.translator import LocalizedTranslator
+from domain.repositories.db_repo.requests import RequestsRepo
 from tgbot.misc.states import RentTopchanSG
 
 
-async def close_topchan_rent(
+async def close_overall_topchan_menu(
         call: CallbackQuery,
         button: Button,
         dialog_manager: DialogManager
@@ -28,7 +29,24 @@ async def switch_to_topchan(
     await dialog_manager.switch_to(RentTopchanSG.chose_topchan_rent_date)
 
 
-async def cancel_to_overall_topchans(
+async def get_topchan_location(
+        call: CallbackQuery,
+        button: Button,
+        dialog_manager: DialogManager,
+):
+
+    chosen_topchan_id: int = int(dialog_manager.dialog_data.get("chosen_topchan_id"))
+    longitude = float(dialog_manager.dialog_data.get("longitude"))
+    latitude = float(dialog_manager.dialog_data.get("latitude"))
+    await call.message.delete()
+    await call.bot.send_location(
+        chat_id=call.from_user.id,
+        latitude=latitude,
+        longitude=longitude,
+    )
+
+
+async def cancel_to_overall_topchan_menu(
         call: CallbackQuery,
         button: Button,
         dialog_manager: DialogManager,

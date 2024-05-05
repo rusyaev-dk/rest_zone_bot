@@ -11,8 +11,8 @@ class TopchanDBModel(Base):
 
     topchan_id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=False)
     name: Mapped[str] = mapped_column(String(128), nullable=True, default="")
-    cost_per_hour: Mapped[float] = mapped_column(DECIMAL(precision=16, scale=4), default=0, nullable=False,
-                                                 autoincrement=False)
+    cost_per_day: Mapped[float] = mapped_column(DECIMAL(precision=16, scale=4), default=0, nullable=False,
+                                                autoincrement=False)
     longitude: Mapped[int] = mapped_column(DECIMAL(precision=16, scale=4), default=0, nullable=False,
                                            autoincrement=False)
     latitude: Mapped[int] = mapped_column(DECIMAL(precision=16, scale=4), default=0, nullable=False,

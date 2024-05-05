@@ -1,13 +1,16 @@
+import datetime
+from datetime import date
 from typing import List, Dict
 
 from aiogram_dialog import DialogManager
 
 from data.l10n.translator import LocalizedTranslator
-from domain.models.business_models import TopchanModel
+from domain.models.business_models import TopchanModel, TopchanReservationModel
 from domain.repositories.db_repo.requests import RequestsRepo
+from tgbot.handlers.private.dialogs.custom_calendar_widget import SELECTED_DAYS_KEY
 
 
-async def overall_topchans_getter(
+async def overall_moderation_topchans_getter(
         dialog_manager: DialogManager,
         **kwargs
 ):
@@ -29,19 +32,17 @@ async def overall_topchans_getter(
         )
 
     data = {
-        "overall_topchans_text": l10n.get_text(key="overall-topchans-msg"),
         "topchans": topchans,
-        "close_btn_text": l10n.get_text(key='close-btn')
     }
 
     return data
 
 
-def topchan_id_getter(topchan: Dict) -> str:
+def moderation_topchan_id_getter(topchan: Dict) -> str:
     return str(topchan.get("id"))
 
 
-async def chosen_topchan_getter(
+async def chosen_topchan_moderation_getter(
         dialog_manager: DialogManager,
         **kwargs
 ):
@@ -61,7 +62,7 @@ async def chosen_topchan_getter(
             key="chosen-topchan-msg",
             args={
                 "index": chosen_topchan_id,
-                "cost": topchan_model.cost_per_hour
+                "cost": topchan_model.cost_per_day
             }
         ),
         "topchan_location_btn_text": l10n.get_text(key="location-btn"),
@@ -69,3 +70,11 @@ async def chosen_topchan_getter(
     }
 
     return data
+
+
+async def topchan_reservation_dates_getter(dialog_manager, **_):
+    selected = dialog_manager.dialog_data.get(SELECTED_DAYS_KEY, [])
+    return {
+        "selected": ", ".join(sorted(selected)),
+    }
+

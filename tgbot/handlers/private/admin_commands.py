@@ -4,6 +4,7 @@ from aiogram import Router, flags, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
+from aiogram_dialog import DialogManager, StartMode
 
 from data.l10n.translator import LocalizedTranslator
 from domain.repositories.db_repo.requests import RequestsRepo
@@ -11,7 +12,7 @@ from tgbot.filters.admin import AdminFilter
 from tgbot.keyboards.inline import set_target_language_code_kb, NotifyUsersTargetLanguageFactory, notify_approve_kb, \
     NotifyUsersApproveFactory
 from tgbot.keyboards.reply import main_menu_kb
-from tgbot.misc.states import NotifyUsersSG
+from tgbot.misc.states import NotifyUsersSG, ModerationMenuSG
 from tgbot.services.broadcaster import *
 from tgbot.services.format_functions import format_statistics_info
 
@@ -27,6 +28,20 @@ async def get_bot_statistics(
 ):
     text = await format_statistics_info(repo=repo)
     await message.answer(text)
+
+
+@admin_router.message(Command("moderation_menu"))
+async def get_moderation_menu(
+        message: Message,
+        state: FSMContext,
+        repo: RequestsRepo,
+        l10n: LocalizedTranslator,
+        dialog_manager: DialogManager
+):
+    await dialog_manager.start(
+        state=ModerationMenuSG.overall_topchans,
+        mode=StartMode.RESET_STACK,
+    )
 
 
 @admin_router.message(Command("notify_users"))

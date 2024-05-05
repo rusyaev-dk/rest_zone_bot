@@ -4,6 +4,7 @@ from .feedback import feedback_router
 from .admin_commands import admin_router
 from .dialogs.settings_dialog.dialogs import overall_settings_dialog
 from .dialogs.tapchan_rent_dialog.dialogs import topchan_rent_dialog
+from .dialogs.moderation_dialog.dialogs import moderation_menu_dialog
 
 private_routers = [
     start_router,
@@ -12,6 +13,7 @@ private_routers = [
     feedback_router,
     topchan_rent_dialog,
     overall_settings_dialog,
+    moderation_menu_dialog
 ]
 
 __all__ = [

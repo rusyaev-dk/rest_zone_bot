@@ -11,7 +11,7 @@ from domain.repositories.db_repo.base import BaseRepo
 class TopchanDBRepo(BaseRepo):
     async def add_topchan(
             self,
-            cost_per_hour: float,
+            cost_per_day: float,
             name: str,
             longitude: float,
             latitude: float,
@@ -24,7 +24,7 @@ class TopchanDBRepo(BaseRepo):
             .values(
                 topchan_id=topchan_id,
                 name=name,
-                cost_per_hour=cost_per_hour,
+                cost_per_day=cost_per_day,
                 longitude=longitude,
                 latitude=latitude,
             ).on_conflict_do_nothing()
@@ -49,7 +49,7 @@ class TopchanDBRepo(BaseRepo):
         topchan: TopchanModel = TopchanModel(
             topchan_id=topchan_db.topchan_id,
             name=topchan_db.name,
-            cost_per_hour=topchan_db.cost_per_hour,
+            cost_per_day=topchan_db.cost_per_day,
             latitude=topchan_db.latitude,
             longitude=topchan_db.longitude,
         )
@@ -67,7 +67,7 @@ class TopchanDBRepo(BaseRepo):
                 TopchanModel(
                     topchan_id=topchan_db.topchan_id,
                     name=topchan_db.name,
-                    cost_per_hour=topchan_db.cost_per_hour,
+                    cost_per_day=topchan_db.cost_per_day,
                     latitude=topchan_db.latitude,
                     longitude=topchan_db.longitude,
                 )

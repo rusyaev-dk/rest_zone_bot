@@ -26,3 +26,10 @@ class RentTopchanSG(StatesGroup):
     overall_topchans = State()
     chose_topchan_rent_date = State()
     approve_rent = State()
+
+
+class ModerationMenuSG(StatesGroup):
+    overall_topchans = State()
+    topchan_menu = State()
+    topchan_dates_reservation = State()
+    get_client_phone = State()

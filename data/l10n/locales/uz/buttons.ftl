@@ -1,7 +1,7 @@
 
 phone-request-btn = 📞 Raqam yuboring
 
-reserve-topchan-btn = Арендовать тапчан
+reserve-topchan-btn = Topchan ijarasi
 
 settings-btn = 🔧 Sozlamalar
 
@@ -17,3 +17,4 @@ close-btn = Yopish
 back-btn = Orqaga
 
 topchan-btn = Topchan №{ $index }
+location-btn = 📍 Manzil

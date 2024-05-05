@@ -17,3 +17,4 @@ close-btn = Закрыть
 back-btn = Назад
 
 topchan-btn = Топчан №{ $index }
+location-btn = 📍 Локация

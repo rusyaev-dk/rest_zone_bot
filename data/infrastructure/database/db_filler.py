@@ -12,28 +12,28 @@ class DBFiller:
         {
             "id": 1,
             "name": "1",
-            "cost_per_hour": 15000,
+            "cost_per_day": 15000,
             "latitude": 43.34,
             "longitude": 43.34,
         },
         {
             "id": 2,
             "name": "2",
-            "cost_per_hour": 18000,
+            "cost_per_day": 18000,
             "latitude": 43.34,
             "longitude": 43.34,
         },
         {
             "id": 3,
             "name": "3",
-            "cost_per_hour": 15000,
+            "cost_per_day": 15000,
             "latitude": 43.34,
             "longitude": 43.34,
         },
         {
             "id": 4,
             "name": "4",
-            "cost_per_hour": 25000,
+            "cost_per_day": 25000,
             "latitude": 43.34,
             "longitude": 43.34,
         },
@@ -52,7 +52,7 @@ class DBFiller:
                 .values(
                     topchan_id=topchan.get("id"),
                     name=topchan.get("name"),
-                    cost_per_hour=topchan.get("cost_per_hour"),
+                    cost_per_day=topchan.get("cost_per_day"),
                     longitude=topchan.get("longitude"),
                     latitude=topchan.get("latitude"),
                 )

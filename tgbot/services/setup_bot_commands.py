@@ -6,7 +6,10 @@ from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeCha
 from data.l10n.translator import LocalizedTranslator
 
 
-async def update_user_commands(bot: Bot, l10n: LocalizedTranslator):
+async def update_user_commands(
+        bot: Bot,
+        l10n: LocalizedTranslator
+):
     default_commands = [
         BotCommand(
             command="start",
@@ -18,7 +21,10 @@ async def update_user_commands(bot: Bot, l10n: LocalizedTranslator):
         ),
     ]
 
-    await bot.set_my_commands(commands=default_commands, scope=BotCommandScopeDefault())
+    await bot.set_my_commands(
+        commands=default_commands,
+        scope=BotCommandScopeDefault()
+    )
 
 
 async def setup_admin_commands(
@@ -35,10 +41,17 @@ async def setup_admin_commands(
             description="Статистика"
         ),
         BotCommand(
+            command="moderation_menu",
+            description="Панель модерации"
+        ),
+        BotCommand(
             command="help",
             description="Помощь"
         ),
     ]
 
     for admin_id in admin_ids:
-        await bot.set_my_commands(commands=admin_commands, scope=BotCommandScopeChat(chat_id=admin_id))
+        await bot.set_my_commands(
+            commands=admin_commands,
+            scope=BotCommandScopeChat(chat_id=admin_id)
+        )

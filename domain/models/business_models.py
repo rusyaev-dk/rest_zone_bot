@@ -37,22 +37,22 @@ class TopchanModel:
             self,
             topchan_id: int,
             name: str,
-            cost_per_hour: float,
+            cost_per_day: float,
             longitude: float,
             latitude: float,
     ):
-        if cost_per_hour < 0:
+        if cost_per_day < 0:
             raise IncorrectCostPerHour
         self.topchan_id = topchan_id
         self.name = name
-        self.cost_per_hour = cost_per_hour
+        self.cost_per_day = cost_per_day
         self.longitude = longitude
         self.latitude = latitude
 
-    def change_cost_per_hour(self, cost_per_hour: float):
-        if cost_per_hour < 0:
+    def change_cost_per_hour(self, cost_per_day: float):
+        if cost_per_day < 0:
             raise IncorrectCostPerHour
-        self.cost_per_hour = cost_per_hour
+        self.cost_per_day = cost_per_day
 
     def change_location(
             self,
